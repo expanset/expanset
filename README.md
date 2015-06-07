@@ -3,6 +3,7 @@ Expanset
 [![Build Status](https://travis-ci.org/expanset/expanset.png?branch=master)](https://travis-ci.org/expanset/expanset)
 
 Expanset is a suite for a fast creation of Java web applications:
+
 * Simplified configuration.
 * Web application localization.
 * Supports simple database connection configuration.
