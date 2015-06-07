@@ -17,6 +17,7 @@ after_success:
 # NOTE: CI_DEPLOY_USERNAME is set to expansetci, the username
 # we've set up with Sonatype, which only has permission to push
 # to the snapshot repo.
+
 env:
   global:
     - secure: ""
