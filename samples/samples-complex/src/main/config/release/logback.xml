@@ -1,0 +1,19 @@
+<configuration scan="true" scanPeriod="30 seconds" >
+	<contextName>WebApplication</contextName>
+	<jmxConfigurator/>
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+	 	<file>WEB-INF/log/site.log</file>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<logger name="liquibase" level="INFO"/>
+	<logger name="org.dozer" level="INFO"/>
+	<logger name="org.jboss.logging" level="INFO"/>
+	<logger name="org.eclipse.jetty" level="INFO"/>
+	<logger name="org.hibernate.validator" level="INFO"/>
+	<logger name="org.apache.commons.beanutils" level="WARN"/>
+	<root level="INFO">
+    	<appender-ref ref="FILE" />
+	</root>
+</configuration>
