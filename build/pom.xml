@@ -105,7 +105,6 @@
 		<module>../hk2</module>
 		<module>../jersey</module>
 		<module>../samples</module>
-		<module>../web</module>
 	</modules>
 	
 	<dependencies>
