@@ -1,7 +1,8 @@
 Expanset
 ==========
 [![Build Status](https://travis-ci.org/expanset/expanset.png?branch=master)](https://travis-ci.org/expanset/expanset)
-*Suite for a fast creation of Java web applications.*
+
+Suite for a fast creation of Java web applications.
 
 * Simplified configuration.
 * Web application localization.
