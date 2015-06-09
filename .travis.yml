@@ -6,10 +6,10 @@ after_success:
 # 
 - if [[ "$TRAVIS_PULL_REQUEST" = "false" ]]; then mvn install --settings build/deploy_settings.xml; else echo 'Pull request, skipping deploy.'; fi
 
-# encrypted CI_DEPLOY_USERNAME and CI_DEPLOY_PASSWORD
-# values for maven deploy. these have been encrypted
+# Encrypted CI_DEPLOY_USERNAME and CI_DEPLOY_PASSWORD
+# values for maven deploy. These have been encrypted
 # with the public key from https://github.com/expanset/expanset
-# and won't work in any other repository. if you want
+# and won't work in any other repository. If you want
 # to run CI in your local fork you'll need to run `travis encrypt ...`
 # accordingly (http://docs.travis-ci.com/user/encryption-keys/)
 #

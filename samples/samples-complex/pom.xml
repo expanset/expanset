@@ -94,7 +94,39 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-csv</artifactId>
 		</dependency>       	
+		<dependency>
+			<groupId>commons-daemon</groupId>
+			<artifactId>commons-daemon</artifactId>
+		</dependency>		
 	</dependencies>
+	
+	<profiles>
+		<profile>
+			<id>release</id>			
+			<properties>
+				<releaseProfile>release</releaseProfile>
+			</properties>
+			<build>
+				<plugins>
+					 <plugin>
+			            <artifactId>maven-assembly-plugin</artifactId>
+			            <configuration>
+			                <descriptor>${basedir}/src/main/assembly/site-folder.xml</descriptor>
+			            </configuration>
+			            <executions>
+			                <execution>
+			                    <id>create-site</id>
+			                    <phase>package</phase>
+			                    <goals>
+			                        <goal>single</goal>
+			                    </goals>
+			                </execution>
+			            </executions>
+			        </plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 	
 	<build>
 		<plugins>
@@ -154,21 +186,6 @@
 	                </archive>
 	            </configuration>
         	</plugin>		
-			 <plugin>
-	            <artifactId>maven-assembly-plugin</artifactId>
-	            <configuration>
-	                <descriptor>${basedir}/src/main/assembly/site-folder.xml</descriptor>
-	            </configuration>
-	            <executions>
-	                <execution>
-	                    <id>create-site</id>
-	                    <phase>package</phase>
-	                    <goals>
-	                        <goal>single</goal>
-	                    </goals>
-	                </execution>
-	            </executions>
-	        </plugin>
 		</plugins>
 		<pluginManagement>
         	<plugins>
@@ -215,16 +232,4 @@
     	</pluginManagement>
 	</build>
 			
-	<profiles>
-		<profile>
-			<id>release</id>
-			<activation>
-      			<activeByDefault>true</activeByDefault>
-    		</activation>			
-			<properties>
-				<releaseProfile>release</releaseProfile>
-			</properties>			
-		</profile>
-	</profiles>
-
 </project>

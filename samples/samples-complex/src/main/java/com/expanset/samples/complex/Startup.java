@@ -1,8 +1,12 @@
-package com.expanset.samples.standalone;
+package com.expanset.samples.complex;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.lang3.StringUtils;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.api.ServiceLocatorFactory;
@@ -10,23 +14,27 @@ import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.expanset.dbmigration.DbMaintenance;
+import com.expanset.hk2.persistence.config.SingleDatabasePersistenceConfiguratorBinder;
+import com.expanset.hk2.persistence.jpa.JpaPersistenceBinder;
+import com.expanset.hk2.persistence.jpa.JpaPersistenceContextKey;
 import com.expanset.jersey.jetty.EmbeddedJetty;
 import com.expanset.jersey.jetty.EmbeddedJettyBinder;
+import com.expanset.jersey.persistence.PersistenceFeature;
 import com.expanset.logback.LogbackUtils;
 
 /**
- * Starts and shutdown web site.
+ * Project entry point.
  */
-public class App {
+public class Startup {
 	
 	/**
 	 * Application service locator.
 	 */
-	private static final ServiceLocator serviceLocator = 
-			ServiceLocatorFactory.getInstance().create(null);
+	private static final ServiceLocator serviceLocator = ServiceLocatorFactory.getInstance().create(null);
 	
-	private final static Logger log = LoggerFactory.getLogger(App.class);
-
+	private final static Logger log = LoggerFactory.getLogger(WebApplication.class);
+	
 	/**
 	 * Initializes services.
 	 * @param args Program arguments.
@@ -40,8 +48,8 @@ public class App {
 		ServiceLocatorUtilities.bind(serviceLocator, new EmbeddedJettyBinder(
 				getResourcePath("."), 
 				getResourcePath("/WEB-INF/webserver.xml"),
-				AppConfig.class,
-				false));
+				WebApplication.class,
+				true));		// Use sessions (for SessionFeature).
 	}
 
 	/**
@@ -92,13 +100,37 @@ public class App {
     	final String workingdirectory = System.getProperty("user.dir");
     	System.out.println(String.format("Working directory is %s", workingdirectory));
     	
-    	App app = new App();
-    	app.init(args);
-
+    	Startup startup = new Startup();
+    	
+    	startup.init(args);
+    	
+    	if(DbMaintenance.isDbCommandLine(args)) {
+    		// Database maintenance operation (migrations, rollbacks etc).
+    		
+    		// Need to initialize access to database.
+    		final Map<String, String> commonProperties = new HashMap<>();
+    		commonProperties.put(PersistenceFeature.DB_BASE_PATH_PROPERTY, getResourcePath("/WEB-INF/db"));
+    		
+    		final DbMaintenance dbMaintenance = new DbMaintenance(
+    				// Database connection properties.
+    				new PropertiesConfiguration(getResourcePath("/WEB-INF/config.properties")),
+    				// We uses JPA.
+    				new JpaPersistenceBinder(),
+    				// We have single database with settings started as 'db.'.
+    				new SingleDatabasePersistenceConfiguratorBinder("db", commonProperties), 
+    				// Liquibase changeset file.
+    				"db/main.xml");
+    		// Setup unit name and starts database command from command line.
+    		dbMaintenance.Do(args, new JpaPersistenceContextKey("main"));
+    		
+    		// Do not start web site, only do database maintenance.
+    		return;
+    	}
+    	
     	System.out.println("Starting...");
     	
         try {
-        	app.start();
+        	startup.start();
         
         	System.out.printf("Started, to stop print '%s'", STOP_COMMAND);
         	System.out.println();
@@ -113,9 +145,9 @@ public class App {
         
         	System.out.println("Stopping...");
         	
-        	app.stop();
+        	startup.stop();
         } finally {
-        	app.destroy();	
+        	startup.destroy();	
         }
         
         System.out.println("Stopped");
@@ -128,5 +160,5 @@ public class App {
 	 */
 	private static String getResourcePath(String resourcePath) {
 		return Paths.get(".", resourcePath).toAbsolutePath().toString();
-	} 
+	}	
 }
