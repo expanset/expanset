@@ -27,7 +27,7 @@
 	
     <scm>
         <url>https://github.com/expanset/expanset</url>
-        <connection>scm:git:git://github.com/expanset/expanset.git</connection>
+        <connection>scm:git:https://github.com/expanset/expanset</connection>
         <developerConnection>scm:git:git@github.com:expanset/expanset.git</developerConnection>
         <tag>HEAD</tag>
     </scm>    
