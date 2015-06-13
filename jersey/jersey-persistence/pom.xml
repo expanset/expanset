@@ -15,8 +15,9 @@
 		
 	<packaging>jar</packaging>
 	
-	<name>jersey-persistence</name>
-
+	<name>Jersey persistence</name>
+	<description>Jersey features for entity persistence</description>
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.expanset.hk2</groupId>

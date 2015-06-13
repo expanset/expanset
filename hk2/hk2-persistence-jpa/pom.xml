@@ -15,7 +15,8 @@
 		
 	<packaging>jar</packaging>
 	
-	<name>hk2-persistence-jpa</name>
+	<name>HK2 JPA persistence</name>
+	<description>HK2 bindings for entity persistence based on JPA</description>
 
 	<dependencies>
 		<dependency>

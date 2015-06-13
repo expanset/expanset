@@ -15,7 +15,8 @@
 		
 	<packaging>jar</packaging>
 
-	<name>Logback support</name>
+	<name>Logback helpers</name>
+	<description>Logback helpers</description>	
 
 	<dependencies>
 		<dependency>

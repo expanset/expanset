@@ -17,10 +17,12 @@
 	<packaging>pom</packaging>
 	
 	<name>Samples</name>
-	
+	<description>Expanset samples</description>
+		
 	<modules>
 		<module>samples-complex</module>
 		<module>samples-getting-started</module>
+		<module>samples-many-databases</module>
 	</modules>
 		
 	<dependencies>

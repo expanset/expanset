@@ -15,7 +15,8 @@
 		
 	<packaging>jar</packaging>
 	
-	<name>jersey-mvc</name>
+	<name>MVC feature</name>
+	<description>Feature for serving web pages</description>
 
 	<dependencies>
 		<dependency>

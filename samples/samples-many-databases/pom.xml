@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<prerequisites>
+		<maven>3.2.1</maven>
+	</prerequisites>
+
+	<parent> 
+		<groupId>com.expanset.samples</groupId>
+		<artifactId>samples</artifactId>
+		<version>1.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	
+	<artifactId>samples-many-databases</artifactId>
+
+	<packaging>war</packaging>
+
+	<name>Many databases sample</name>
+	<description>Web application with many databases support</description>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.expanset.jersey</groupId>
+			<artifactId>jersey-contrib</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.expanset.jersey</groupId>
+			<artifactId>jersey-mvc-freemarker</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.expanset.jersey</groupId>
+			<artifactId>jersey-persistence-ormlite</artifactId>
+			<version>${project.version}</version>
+		</dependency>				
+		<dependency>		
+			<groupId>com.expanset.utils</groupId>
+			<artifactId>utils-logback</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>		
+			<groupId>com.expanset.utils</groupId>
+			<artifactId>utils-dbmigration</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>		
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+            	<groupId>org.apache.maven.plugins</groupId>
+            	<artifactId>maven-war-plugin</artifactId>
+            	<configuration>
+                	<failOnMissingWebXml>false</failOnMissingWebXml>
+                	<warName>samples-many-databases</warName>
+            	</configuration>
+        	</plugin>		
+		</plugins>
+	</build>
+
+</project>

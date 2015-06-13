@@ -15,7 +15,8 @@
 		
 	<packaging>jar</packaging>
 
-	<name>utils-jackson</name>
+	<name>Jackson helpers</name>
+	<description>Jackson helpers</description>	
 
 	<dependencies>
 		<dependency>

@@ -15,7 +15,8 @@
 		
 	<packaging>jar</packaging>
 	
-	<name>Db migrations support</name>
+	<name>Database migration</name>
+	<description>Database migration support based on Liquibase</description>	
 
 	<dependencies>
 		<dependency>

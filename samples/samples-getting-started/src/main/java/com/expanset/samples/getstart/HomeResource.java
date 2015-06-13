@@ -1,4 +1,4 @@
-package com.expanset.samples.standalone;
+package com.expanset.samples.getstart;
 
 import javax.validation.Valid;
 import javax.ws.rs.BeanParam;

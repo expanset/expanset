@@ -16,8 +16,9 @@
 	
 	<packaging>pom</packaging>
 	
-	<name>Jersey</name>
-	
+	<name>Jersey features</name>
+	<description>Jersey features</description>
+
 	<modules>
 		<module>jersey-contrib</module>
 		<module>jersey-mvc</module>

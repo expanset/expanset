@@ -15,8 +15,9 @@
 		
 	<packaging>jar</packaging>
 	
-	<name>jersey-contrib</name>
-
+	<name>Jersey contribution library</name>
+	<description>Features for static handling, securing etc</description>
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.expanset.utils</groupId>

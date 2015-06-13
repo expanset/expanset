@@ -15,7 +15,8 @@
 		
 	<packaging>jar</packaging>
 
-	<name>hk2-contrib</name>
+	<name>HK2 contribution library</name>
+	<description>Bindings for configuring, internationalizing etc</description>
 
 	<dependencies>
 		<dependency>

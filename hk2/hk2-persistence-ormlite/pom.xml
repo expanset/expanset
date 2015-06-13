@@ -15,7 +15,8 @@
 		
 	<packaging>jar</packaging>
 	
-	<name>hk2-persistence-ormlite</name>
+	<name>HK2 Ormlite persistence</name>
+	<description>HK2 bindings for entity persistence based on Ormlite</description>
 
 	<dependencies>
 		<dependency>

@@ -10,24 +10,21 @@
 		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 		
 	<changeSet author="system" id="v1-0001-1">
-    	<comment>Create user table</comment>
-        <createTable tableName="user" remarks="Site users">
-        	<column name="id" type="IDENTITY" remarks="Record identifier">
+    	<comment>Create sample table</comment>
+        <createTable tableName="sample" remarks="Sample">
+        	<column name="id" type="NUMERIC" remarks="Record identifier">
         		<constraints nullable="false" primaryKey="true" />
         	</column>
-            <column name="created" type="TIMESTAMP" remarks="Creation date" >
-                <constraints nullable="false"/>
-            </column>
-            <column name="login" type="VARCHAR(200)" remarks="User login">
+            <column name="hello" type="VARCHAR(200)" remarks="Hello">
             	<constraints nullable="false" unique="true"/>
-            </column>
-            <column name="password" type="VARCHAR(200)" remarks="User password hash" >
-            	<constraints nullable="false"/>
-            </column>
-            <column name="stock_quotes_date" type="TIMESTAMP" remarks="Date of the last data acquisition" >
-                <constraints nullable="true"/>
             </column>
         </createTable>
 	</changeSet>
+    <changeSet author="system" id="v1-0001-2">
+    	<comment>Loading data</comment>
+    	<loadUpdateData tableName="sample" primaryKey="id" file="db02.csv" >
+    		<column name="id" type="NUMERIC" />    	
+    	</loadUpdateData>
+    </changeSet>	
 		
 </databaseChangeLog>

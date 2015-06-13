@@ -17,6 +17,7 @@
 	<packaging>pom</packaging>
 	
 	<name>Utilities</name>
+	<description>Some helper classes</description>	
 	
 	<modules>
 		<module>utils-common</module>
@@ -25,7 +26,4 @@
 		<module>utils-dbmigration</module>
 	</modules>
 		
-	<dependencies>
-	</dependencies>
-
 </project>

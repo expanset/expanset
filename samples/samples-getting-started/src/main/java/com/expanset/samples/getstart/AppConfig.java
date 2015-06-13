@@ -1,4 +1,4 @@
-package com.expanset.samples.standalone;
+package com.expanset.samples.getstart;
 
 import javax.inject.Inject;
 import org.apache.commons.configuration.Configuration;

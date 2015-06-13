@@ -1,4 +1,4 @@
-package com.expanset.samples.standalone;
+package com.expanset.samples.getstart;
 
 import javax.ws.rs.FormParam;
 

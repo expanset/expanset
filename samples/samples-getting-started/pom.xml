@@ -15,7 +15,8 @@
 
 	<packaging>jar</packaging>
 
-	<name>Getting started</name>
+	<name>Getting started sample</name>
+	<description>Web application with basic Expanset features</description>
 	
 	<dependencies>
 		<!-- Expanset dependencies. -->
@@ -66,7 +67,7 @@
 					<finalName>site</finalName>
 					<archive>
 						<manifest>
-							<mainClass>com.expanset.samples.standalone.App</mainClass>
+							<mainClass>com.expanset.samples.getstart.App</mainClass>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>

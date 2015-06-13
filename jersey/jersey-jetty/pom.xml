@@ -15,7 +15,8 @@
 		
 	<packaging>jar</packaging>
 
-	<name>jersey-jetty</name>
+	<name>Jetty web-server binding</name>
+	<description>Jetty web-server binding for standalone web applications</description>
 
 	<dependencies>
 		<dependency>

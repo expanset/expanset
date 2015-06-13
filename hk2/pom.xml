@@ -16,7 +16,8 @@
 	
 	<packaging>pom</packaging>
 	
-	<name>HK2</name>
+	<name>HK2 bindings</name>
+	<description>HK2 bindings</description>
 	
 	<modules>
 		<module>hk2-contrib</module>

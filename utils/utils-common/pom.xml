@@ -15,9 +15,7 @@
 		
 	<packaging>jar</packaging>
 
-	<name>utils-common</name>
-
-	<dependencies>
-	</dependencies>
-
+	<name>Common utilities</name>
+	<description>Error handling etc</description>	
+	
 </project>

@@ -15,7 +15,8 @@
 		
 	<packaging>jar</packaging>
 	
-	<name>jersey-mvc-freemarker</name>
+	<name>Freemarker MVC feature</name>
+	<description>Feature for serving Freemarker web pages</description>
 
 	<dependencies>
 		<dependency>

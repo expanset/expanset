@@ -15,8 +15,9 @@
 		
 	<packaging>jar</packaging>
 
-	<name>jersey-jackson</name>
-
+	<name>Jersey Jackson feature</name>
+	<description>Using JSON in web application</description>
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.expanset.utils</groupId>

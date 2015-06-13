@@ -33,6 +33,12 @@ public class RequestPersistenceSessionManager
 
 	public final static String PERSISTENCE_SESSION_SCOPE = 
 			RequestPersistenceSessionManager.class.getName() + ".persistenceSessionScope";	
+
+	/**
+	 * Request property to setup factory name overrides for all persistence sessions in request.
+	 */
+	public static final String FACTORY_NAME_OVERRIDES = 
+			RequestPersistenceSessionManager.class.getName() + ".factoryNameOverrides";
 	
 	@Inject
 	protected RequestScope requestScope;
@@ -75,7 +81,11 @@ public class RequestPersistenceSessionManager
 		final PersistenceSession session = 
 				(PersistenceSession)request.getProperty(PERSISTENCE_SESSION);
 		if(session == null) {
-			request.setProperty(PERSISTENCE_SESSION_SCOPE, beginSession());
+			@SuppressWarnings("unchecked")
+			final Map<String, String> factoryNameOverrides = 
+					(Map<String, String>)request.getProperty(FACTORY_NAME_OVERRIDES);
+			
+			request.setProperty(PERSISTENCE_SESSION_SCOPE, beginSession(factoryNameOverrides));
 			return (PersistenceSession)request.getProperty(PERSISTENCE_SESSION);
 		}
 		
