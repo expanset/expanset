@@ -23,6 +23,7 @@
 		<module>jersey-contrib</module>
 		<module>jersey-mvc</module>
 		<module>jersey-mvc-freemarker</module>
+		<module>jersey-mvc-mustache</module>
 		<module>jersey-jetty</module>
 		<module>jersey-persistence</module>
 		<module>jersey-persistence-jpa</module>

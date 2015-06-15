@@ -1,0 +1,93 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<prerequisites>
+		<maven>3.2.1</maven>
+	</prerequisites>
+
+	<parent> 
+		<groupId>com.expanset.samples</groupId>
+		<artifactId>samples</artifactId>
+		<version>1.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	
+	<artifactId>samples-mvc-mustache</artifactId>
+
+	<packaging>jar</packaging>
+	
+	<name>Getting started sample</name>
+	<description>Web application with Mustache template engine</description>
+	
+	<dependencies>
+		<!-- Expanset dependencies. -->
+		
+		<!-- Useful features and utilities. -->
+		<dependency>
+			<groupId>com.expanset.jersey</groupId>
+			<artifactId>jersey-contrib</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<!-- Embedded Jetty as web server for this site. -->
+		<dependency>
+			<groupId>com.expanset.jersey</groupId>
+			<artifactId>jersey-jetty</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<!-- Mustache as HTML template engine. -->
+		<dependency>
+			<groupId>com.expanset.jersey</groupId>
+			<artifactId>jersey-mvc-mustache</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+				
+		<!-- Logback as log system. -->
+		<dependency>		
+			<groupId>com.expanset.utils</groupId>
+			<artifactId>utils-logback</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- Creating executable jar. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<finalName>site</finalName>
+					<archive>
+						<manifest>
+							<mainClass>com.expanset.samples.mustache.App</mainClass>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						</manifest>
+						<manifestEntries>
+							<Built-By>Expanset</Built-By>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+			<!-- Creating web site assembly. -->
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptor>${basedir}/src/main/assembly/site-folder.xml</descriptor>
+				</configuration>
+				<executions>
+					<execution>
+						<id>create-site</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

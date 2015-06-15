@@ -23,6 +23,7 @@
 		<module>samples-complex</module>
 		<module>samples-getting-started</module>
 		<module>samples-many-databases</module>
+		<module>samples-mvc-mustache</module>
 	</modules>
 		
 	<dependencies>

@@ -1,4 +1,4 @@
-package com.expanset.jersey.freemarker;
+package com.expanset.jersey.mvc.freemarker;
 
 import java.io.IOException;
 import java.io.OutputStream;

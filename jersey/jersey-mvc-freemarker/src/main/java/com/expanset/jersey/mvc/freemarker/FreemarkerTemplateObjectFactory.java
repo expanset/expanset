@@ -1,4 +1,4 @@
-package com.expanset.jersey.freemarker;
+package com.expanset.jersey.mvc.freemarker;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -126,7 +126,7 @@ public class FreemarkerTemplateObjectFactory {
 			throws TemplateModelException {
 		Validate.notNull(env, "env");
 		Validate.notNull(template, "template");
-		Validate.notNull(template, "template");
+		Validate.notNull(viewable, "viewable");
 		
 		final Locale locale = localeProvider != null ? localeProvider.get() : null;
 		if(locale != null) {

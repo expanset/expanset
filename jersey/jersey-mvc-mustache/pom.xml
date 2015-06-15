@@ -11,12 +11,12 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	
-	<artifactId>jersey-mvc</artifactId>
+	<artifactId>jersey-mvc-mustache</artifactId>
 		
 	<packaging>jar</packaging>
 	
-	<name>MVC feature</name>
-	<description>Feature for serving web pages</description>
+	<name>Mustache MVC feature</name>
+	<description>Feature for serving Mustache web pages</description>
 
 	<dependencies>
 		<dependency>
@@ -24,14 +24,14 @@
 			<artifactId>jersey-contrib</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
 		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-		</dependency>	
-		<dependency>
-			<groupId>org.glassfish.jersey.ext</groupId>
+			<groupId>com.expanset.jersey</groupId>
 			<artifactId>jersey-mvc</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.spullara.mustache.java</groupId>
+			<artifactId>compiler</artifactId>
 		</dependency>		
 	</dependencies>
 

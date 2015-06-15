@@ -1,4 +1,4 @@
-package com.expanset.samples.getstart;
+package com.expanset.samples.mustache;
 
 import javax.inject.Inject;
 
@@ -11,10 +11,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.WebConfig;
 
 import com.expanset.hk2.config.ConfiguredFieldsBinder;
-import com.expanset.jersey.assets.AssetsBundle;
-import com.expanset.jersey.assets.AssetsBundlesFeature;
-import com.expanset.jersey.mvc.freemarker.FreemarkerMvcFeature;
-import com.expanset.jersey.validation.ValidationFeature;
+import com.expanset.jersey.mvc.mustache.MustacheMvcFeature;
 
 /**
  * Web application configuration.
@@ -35,20 +32,10 @@ public class AppConfig extends ResourceConfig {
 		appConfig.setReloadingStrategy(new FileChangedReloadingStrategy());
 		
 		// Use Freemarker template engine
-		property(FreemarkerMvcFeature.ERROR_PAGE, "/error.ftl");
-		property(FreemarkerMvcFeature.TEMPLATE_BASE_PATH, "/WEB-INF/views");
-		register(FreemarkerMvcFeature.class);
-
-		// Validate view models.
-		register(ValidationFeature.class);
-		
-		// Register static assets.
-		property(AssetsBundlesFeature.ASSETS, new AssetsBundle[] { 
-				new AssetsBundle("/assets/*"),
-		});
-		property(AssetsBundlesFeature.CACHE_CONTROL, "max-age=3600"); // Use client caching.
-		register(AssetsBundlesFeature.class);
-		
+		property(MustacheMvcFeature.ERROR_PAGE, "/error.mustache");
+		property(MustacheMvcFeature.TEMPLATE_BASE_PATH, "/WEB-INF/views");
+		register(MustacheMvcFeature.class);
+				
 		// Packages with web request handlers.
 		packages(StringUtils.join(new String[] { 
 				HomeResource.class.getPackage().getName() }, ';'));

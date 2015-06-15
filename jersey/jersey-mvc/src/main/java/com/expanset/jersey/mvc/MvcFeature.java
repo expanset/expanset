@@ -38,6 +38,7 @@ public class MvcFeature implements Feature {
         }
         
         registerTemplatePopulator(context);
+        registerTemplateCacheManager(context);
         
         return true;
 	}
@@ -56,4 +57,13 @@ public class MvcFeature implements Feature {
 			}
 		});
 	}
+	
+	protected void registerTemplateCacheManager(FeatureContext context) {	
+        context.register(new AbstractBinder() {
+			@Override
+			protected void configure() {
+				addActiveDescriptor(TemplateCacheManager.class);
+			}
+		});
+	}	
 }

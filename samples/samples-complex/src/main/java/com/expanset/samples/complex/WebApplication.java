@@ -14,14 +14,15 @@ import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 import org.glassfish.jersey.servlet.WebConfig;
+
 import com.expanset.hk2.config.ConfiguredFieldsBinder;
 import com.expanset.jersey.assets.AssetsBundle;
 import com.expanset.jersey.assets.AssetsBundlesFeature;
 import com.expanset.jersey.caching.ClientCachingFeature;
 import com.expanset.jersey.errorhandling.ForbiddenExceptionMapper;
-import com.expanset.jersey.freemarker.FreemarkerMvcFeature;
 import com.expanset.jersey.i18n.I18nFeature;
 import com.expanset.jersey.jackson.JacksonFeature;
+import com.expanset.jersey.mvc.freemarker.FreemarkerMvcFeature;
 import com.expanset.jersey.persistence.jpa.JpaPersistenceFeature;
 import com.expanset.jersey.security.CookieAuthenticationFeature;
 import com.expanset.jersey.session.SessionFeature;

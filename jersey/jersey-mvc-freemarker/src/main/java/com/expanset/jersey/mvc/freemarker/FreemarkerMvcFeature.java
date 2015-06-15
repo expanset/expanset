@@ -1,4 +1,4 @@
-package com.expanset.jersey.freemarker;
+package com.expanset.jersey.mvc.freemarker;
 
 import javax.ws.rs.ConstrainedTo;
 import javax.ws.rs.RuntimeType;
@@ -10,9 +10,9 @@ import org.glassfish.jersey.server.mvc.MvcFeature;
  * Ability to use Freemarker template engine (http://freemarker.org/).
  * The class currently recognizes following properties:
  * <ul>
- * <li>{@link com.expanset.jersey.freemarker.FreemarkerMvcFeature#TEMPLATE_BASE_PATH}</li>
- * <li>{@link com.expanset.jersey.freemarker.FreemarkerMvcFeature#TEMPLATE_OBJECT_FACTORY}</li>
- * <li>{@link com.expanset.jersey.freemarker.FreemarkerMvcFeature#ENCODING}</li>
+ * <li>{@link com.expanset.jersey.mvc.freemarker.FreemarkerMvcFeature#TEMPLATE_BASE_PATH}</li>
+ * <li>{@link com.expanset.jersey.mvc.freemarker.FreemarkerMvcFeature#TEMPLATE_OBJECT_FACTORY}</li>
+ * <li>{@link com.expanset.jersey.mvc.freemarker.FreemarkerMvcFeature#ENCODING}</li>
  * </ul>
  */
 @ConstrainedTo(RuntimeType.SERVER)

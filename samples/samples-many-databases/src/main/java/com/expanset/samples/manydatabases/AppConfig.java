@@ -23,7 +23,7 @@ import com.expanset.hk2.persistence.PersistenceContextFactoryKey;
 import com.expanset.hk2.persistence.PersistenceContextKey;
 import com.expanset.hk2.persistence.config.MultipleDatabasesPersistenceConfiguratorBinder;
 import com.expanset.hk2.persistence.ormlite.OrmlitePersistenceBinder;
-import com.expanset.jersey.freemarker.FreemarkerMvcFeature;
+import com.expanset.jersey.mvc.freemarker.FreemarkerMvcFeature;
 import com.expanset.jersey.persistence.PersistenceFeature;
 import com.expanset.jersey.persistence.ormlite.OrmlitePersistenceFeature;
 import com.expanset.logback.LogbackUtils;

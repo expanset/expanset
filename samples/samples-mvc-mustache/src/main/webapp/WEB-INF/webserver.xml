@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_0.dtd">
+<Configure id="WebServer" class="org.eclipse.jetty.server.Server">
+	<Set name="connectors">
+		<Array type="org.eclipse.jetty.server.Connector">
+			<Item>
+				<New class="org.eclipse.jetty.server.ServerConnector">
+					<Arg>
+						<Ref refid="WebServer" />
+					</Arg>
+					<Set name="port">8080</Set>
+					<Set name="host">localhost</Set>
+				</New>
+			</Item>
+		</Array>
+	</Set>
+</Configure>
