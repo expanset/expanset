@@ -22,6 +22,9 @@ import org.jvnet.hk2.annotations.Service;
 
 import com.expanset.hk2.config.ConfigurationReloadListener;
 import com.expanset.hk2.config.ConfiguredString;
+import com.expanset.hk2.logging.CorrelationIdType;
+import com.expanset.hk2.logging.LogLevel;
+import com.expanset.hk2.logging.Loggable;
 
 @Contract
 @Service
@@ -43,6 +46,7 @@ public class StockQuotesService implements ConfigurationReloadListener {
 		stockQuotesTarget.set(ClientBuilder.newClient().target(stockQuotesUrl.get()));
 	}
 	
+	@Loggable(idType=CorrelationIdType.SIMPLE, value=LogLevel.INFO, measure=true)
 	public List<StockQuote> queryGoogle(String symbol) 
 			throws IOException {
 		

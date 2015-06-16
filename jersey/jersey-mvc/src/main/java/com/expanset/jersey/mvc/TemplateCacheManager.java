@@ -73,7 +73,7 @@ public class TemplateCacheManager {
         	throw new IllegalStateException(String.format("Template %s not found", resourceName));
         }
         
-        cache.putIfAbsent(resolvedResourceName, new TemplateInfo());
+        cache.computeIfAbsent(resolvedResourceName, (key) -> new TemplateInfo());
         
         final Charset charset = TemplateHelper.getTemplateOutputEncoding(webConfig, engine);
 		return new InputStreamReader(stream, charset);		
@@ -90,7 +90,7 @@ public class TemplateCacheManager {
 			throws IOException {
         final long now = System.currentTimeMillis();
 		final String resolvedResourceName = resolveTemplateName(engine, resourceName);
-		final TemplateInfo templateInfo = cache.getOrDefault(resolvedResourceName, new TemplateInfo());
+		final TemplateInfo templateInfo = cache.computeIfAbsent(resolvedResourceName, (key) -> new TemplateInfo());
 		
         if (now - templateInfo.lastChecked < delay) {
         	return false;

@@ -16,6 +16,7 @@ import org.glassfish.jersey.server.ServerProperties;
 import org.glassfish.jersey.servlet.WebConfig;
 
 import com.expanset.hk2.config.ConfiguredFieldsBinder;
+import com.expanset.hk2.logging.ProfilerBinder;
 import com.expanset.jersey.assets.AssetsBundle;
 import com.expanset.jersey.assets.AssetsBundlesFeature;
 import com.expanset.jersey.caching.ClientCachingFeature;
@@ -127,6 +128,9 @@ public class WebApplication extends ResourceConfig {
 				
 				// Access to Configuration.
 				bind(appConfig).to(Configuration.class);		
+				
+				// Use method profiling.
+				install(new ProfilerBinder());
 				
 				// Use class fields to get access to the configuration data.
 				install(new ConfiguredFieldsBinder());
