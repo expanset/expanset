@@ -96,7 +96,6 @@ public class MustacheTemplateObjectFactory {
 	 * @param viewable Template data.
 	 * @param out Output stream for template processing result.
 	 * @throws IOException Load template error.
-	 * @throws TemplateException Process template error.
 	 */
 	public void process(
 			@Nonnull Mustache template, 
@@ -120,7 +119,6 @@ public class MustacheTemplateObjectFactory {
 	 * @param env Template processing environment.
 	 * @param template Template.
 	 * @param viewable Template data.
-	 * @throws TemplateModelException Setup environment error.
 	 */
 	protected void setupEnvironment(Map<String, Object> env, Mustache template, Viewable viewable) {
 		Validate.notNull(env, "env");

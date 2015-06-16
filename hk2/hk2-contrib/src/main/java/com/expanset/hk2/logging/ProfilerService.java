@@ -67,7 +67,6 @@ public class ProfilerService {
 	 * @param name Name of operation.
 	 * @param logLevel Log level to output log records.
 	 * @param correlationId Current ID of operation.
-	 * @param correlationIdType Type of operation ID for creation if necessary.
 	 * @param measureDuration true - measure duration of current operation.
 	 * @return Scope control.
 	 */
