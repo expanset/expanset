@@ -30,7 +30,6 @@ public class HomeResource {
 	 * @return Model.
 	 */
 	@GET
-	@Path("/")
 	@Template(name="/index.ftl")
 	@Produces(MediaType.TEXT_HTML)
 	public Object indexDb1() {

@@ -36,12 +36,12 @@ public class DbMaintenance {
 	 * Command name to print help. Use: &lt;db-command&gt; help.
 	 */
 	public final static String HELP_COMMAND = "help";
+
+	public final static Map<String, Class<? extends AbstractDbCommand>> COMMANDS = new HashMap<>();
 	
-	protected final ServiceLocator serviceLocator = ServiceLocatorFactory.getInstance().create(null);	
+	protected final ServiceLocator serviceLocator;	
 	
 	protected final String changeLogFile;
-
-	protected final static Map<String, Class<? extends AbstractDbCommand>> COMMANDS = new HashMap<>();
 	
 	/**
 	 * @param config Configuration with database connection settings.
@@ -60,12 +60,14 @@ public class DbMaintenance {
 		
 		this.changeLogFile = changeLogFile;
 		
+		this.serviceLocator = ServiceLocatorFactory.getInstance().create(null);
 		ServiceLocatorUtilities.bind(serviceLocator, new AbstractBinder() {
 			@Override
 			protected void configure() {
 				install(persistenceBinder);
 				install(persistenceConfiguratorBinder);
 				install(new LocalTransactionsBinder());
+				install(new DbMaintenanceBinder());
 				
 				bind(config).to(Configuration.class);
 				bind(DbMaintenance.this).to(DbMaintenance.class);
@@ -75,6 +77,28 @@ public class DbMaintenance {
 		});
 	}
 
+	/**
+	 * @param serviceLocator Initialized services.
+	 * @param changeLogFile Name of changelog file (in classpath), optional.
+	 */
+	public DbMaintenance(
+			@Nonnull ServiceLocator serviceLocator,
+			@Nullable String changeLogFile) {
+		Validate.notNull(serviceLocator, "serviceLocator");
+		
+		this.serviceLocator = serviceLocator;
+		this.changeLogFile = changeLogFile;
+		
+		ServiceLocatorUtilities.bind(serviceLocator, new AbstractBinder() {
+			@Override
+			protected void configure() {
+				install(new DbMaintenanceBinder());
+				
+				bind(DbMaintenance.this).to(DbMaintenance.class);
+			}
+		});
+	}
+	
 	static {
 		COMMANDS.put(UpdateDbCommand.DB_COMMAND, UpdateDbCommand.class);
 		COMMANDS.put(RollbackDbCommand.DB_COMMAND, RollbackDbCommand.class);
@@ -116,17 +140,8 @@ public class DbMaintenance {
 		}
 		
 		Validate.notNull(key, "key");
-		
-		final Class<? extends AbstractDbCommand> commandClass = COMMANDS.get(args[0]);
-		
-		ServiceLocatorUtilities.bind(serviceLocator, new AbstractBinder() {
-			@Override
-			protected void configure() {
-				addActiveDescriptor(commandClass);
-			}
-		});
-		
-		final AbstractDbCommand dbCommand = serviceLocator.getService(commandClass);
+				
+		final AbstractDbCommand dbCommand = serviceLocator.getService(AbstractDbCommand.class, args[0]);
 		
 		if(args.length > 1 && StringUtils.equalsIgnoreCase(args[1], HELP_COMMAND)) {
 			final HelpFormatter formatter = new HelpFormatter();

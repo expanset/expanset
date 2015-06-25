@@ -106,10 +106,35 @@
 			</properties>
 			<build>
 				<plugins>
+		 			<!-- Web assets building. -->
+		 			<plugin>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<configuration>
+							<workingDirectory>src/main/webapp</workingDirectory>
+						</configuration>
+						<executions>
+							<execution>
+			                	<id>Grunt package</id>
+			                	<phase>package</phase>
+			                	<goals>
+			                    	<goal>grunt</goal>
+			                	</goals>
+		                        <configuration>
+		                        	<arguments>package</arguments>
+									<srcdir>${basedir}/src/main/webapp/assets</srcdir>
+		  							<outputdir>${basedir}/src/main/app/web/assets</outputdir>        
+		  							<triggerfiles>
+		  								<triggerfile>${basedir}/src/main/webapp/Gruntfile.js</triggerfile>
+		  							</triggerfiles>                   
+		                        </configuration>
+			            	</execution>
+						</executions>
+					</plugin>   				
 					 <plugin>
 			            <artifactId>maven-assembly-plugin</artifactId>
 			            <configuration>
-			                <descriptor>${basedir}/src/main/assembly/site-folder.xml</descriptor>
+			                <descriptor>${basedir}/src/main/assembly/assembly.xml</descriptor>
 			            </configuration>
 			            <executions>
 			                <execution>
@@ -171,7 +196,7 @@
 					<finalName>site</finalName>
 	                <archive>
 	                    <manifest>
-	                        <mainClass>com.expanset.samples.complex.WebApplication</mainClass>
+	                        <mainClass>com.expanset.samples.complex.Startup</mainClass>
 	                        <addClasspath>true</addClasspath>
 	                        <classpathPrefix>lib/</classpathPrefix>
 	                        <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
@@ -183,7 +208,53 @@
             			</manifestEntries>	                    
 	                </archive>
 	            </configuration>
-        	</plugin>		
+        	</plugin>	
+ 			<!-- Web assets building. -->
+ 			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<configuration>
+					<workingDirectory>src/main/webapp</workingDirectory>
+				</configuration>
+				<executions>
+					<execution>
+                        <id>Prepare frontend build</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <configuration>
+                            <nodeVersion>v${node.version}</nodeVersion>
+                            <npmVersion>${npm.version}</npmVersion>
+                        </configuration>
+                    </execution>		
+					<execution>
+					    <id>Install npm packages</id>
+					    <goals>
+					        <goal>npm</goal>
+					    </goals>
+					</execution>
+					<execution>
+					    <id>Install bower packages</id>
+					    <goals>
+					        <goal>bower</goal>
+					    </goals>
+					</execution>
+					<execution>
+	                	<id>Grunt compile</id>
+	                	<goals>
+	                    	<goal>grunt</goal>
+	                	</goals>
+                        <configuration>
+                        	<arguments>compile</arguments>
+							<srcdir>${basedir}/src/main/webapp/assets</srcdir>
+  							<outputdir>${basedir}/src/main/webapp/assets</outputdir>        
+  							<triggerfiles>
+  								<triggerfile>${basedir}/src/main/webapp/Gruntfile.js</triggerfile>
+  							</triggerfiles>                   
+                        </configuration>
+	            	</execution>
+				</executions>
+			</plugin>       		
 		</plugins>
 		<pluginManagement>
         	<plugins>

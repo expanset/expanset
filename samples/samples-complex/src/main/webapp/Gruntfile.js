@@ -17,12 +17,12 @@ module.exports = function(grunt) {
 	            }
 	        },
 	        css: {
-	            options: {
+	            options: { 
 	                destPrefix: 'assets/css'
-	            },
+	            },  
 	            files: {
 	                'bootstrap.css': 'bootstrap/dist/css/bootstrap.css',
-	                'bootstrap.css.map': 'bootstrap/dist/css/bootstrap.css.map'	                
+	                'bootstrap.css.map': 'bootstrap/dist/css/bootstrap.css.map' 
 	            }
 	        },
 	        boostrapFonts: {
@@ -33,12 +33,70 @@ module.exports = function(grunt) {
 	                'fonts': 'bootstrap/dist/fonts'	                
 	            }
 	        }	        
-	    }
+	    },
+	    concat: {
+	    	js: {
+	    		options: {
+	    			sourceMap: true,
+	    			sourceMapStyle: 'embed'
+	    		},	    		
+	    		src: [
+	    		      'assets/js/jquery.js',
+	    		      'assets/js/bootstrap.js',
+	    		      'assets/js/chart.js',
+	    		      'assets/js/site.js',
+	    		      '!assets/js/*.min.js'],
+	    		dest: 'assets/js/scripts.js',
+	    	},	    	
+	    	css: {
+	    		options: {
+	    			sourceMap: true,
+	    			sourceMapStyle: 'embed'
+	    		},	    		
+	    		src: [
+	    		      'assets/css/bootstrap.css',
+	    		      '!assets/css/styles.css', 
+	    		      '!assets/css/*.min.css'],
+	    		dest: 'assets/css/styles.css',
+	    	}	    	
+	    },
+	    uglify: {
+	    	options: {
+	    		sourceMap: true,
+	    		sourceMapIncludeSources: true
+	    	},	 
+	    	js: {
+	    		src: 'assets/js/scripts.js',
+	    		dest: 'assets/js/scripts.min.js',
+	    	}    	
+	    }, 	    
+	    cssmin: {
+	    	options: {
+	    		rebase: true,
+	    		sourceMap: true,
+	    		sourceMapInlineSources: true, 
+	    		target: 'assets/css'
+	    	},	    	
+	    	css: {
+	    		files: [{
+	    			expand: true,
+	    			cwd: 'assets/css',
+	    			src: ['styles.css', '!*.min.css'],
+	    			dest: 'assets/css',
+	    			ext: '.min.css'
+	    		}]
+	    	}
+	    }		    
 	});	
 	
 	grunt.loadNpmTasks('grunt-bowercopy');
-	
-	grunt.registerTask('main', [ 'bowercopy' ]);
+	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
+		
+	grunt.registerTask('compile', ['bowercopy']);
+	grunt.registerTask('package', ['concat', 'uglify', 'cssmin']);
+	grunt.registerTask('all', ['compile', 'package']); 	
 
-	grunt.registerTask('default', [ 'main' ]);	
+	grunt.registerTask('default', [ 'all' ]);	
 }

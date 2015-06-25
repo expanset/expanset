@@ -104,27 +104,30 @@ public class Startup {
     	
     	startup.init(args);
     	
+		// Database maintenance operation (migrations, rollbacks etc).
+    		
+		// Need to initialize access to database.
+		final Map<String, String> commonProperties = new HashMap<>();
+		commonProperties.put(PersistenceFeature.DB_BASE_PATH_PROPERTY, getResourcePath("/WEB-INF/db"));
+		
+		final DbMaintenance dbMaintenance = new DbMaintenance(
+				// Database connection properties.
+				new PropertiesConfiguration(getResourcePath("/WEB-INF/config.properties")),
+				// We uses JPA.
+				new JpaPersistenceBinder(),
+				// We have single database with settings started as 'db.'.
+				new SingleDatabasePersistenceConfiguratorBinder("db", commonProperties), 
+				// Liquibase changeset file.
+				"db/main.xml");
     	if(DbMaintenance.isDbCommandLine(args)) {
-    		// Database maintenance operation (migrations, rollbacks etc).
-    		
-    		// Need to initialize access to database.
-    		final Map<String, String> commonProperties = new HashMap<>();
-    		commonProperties.put(PersistenceFeature.DB_BASE_PATH_PROPERTY, getResourcePath("/WEB-INF/db"));
-    		
-    		final DbMaintenance dbMaintenance = new DbMaintenance(
-    				// Database connection properties.
-    				new PropertiesConfiguration(getResourcePath("/WEB-INF/config.properties")),
-    				// We uses JPA.
-    				new JpaPersistenceBinder(),
-    				// We have single database with settings started as 'db.'.
-    				new SingleDatabasePersistenceConfiguratorBinder("db", commonProperties), 
-    				// Liquibase changeset file.
-    				"db/main.xml");
     		// Setup unit name and starts database command from command line.
     		dbMaintenance.Do(args, new JpaPersistenceContextKey("main"));
-    		
+		
     		// Do not start web site, only do database maintenance.
     		return;
+    	} else {
+    		// Do database update.
+    		dbMaintenance.Do(new String[] {"db-update" }, new JpaPersistenceContextKey("main"));    		
     	}
     	
     	System.out.println("Starting...");

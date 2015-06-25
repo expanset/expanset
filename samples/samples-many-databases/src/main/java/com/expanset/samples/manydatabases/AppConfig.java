@@ -10,6 +10,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.reloading.FileChangedReloadingStrategy;
 import org.apache.commons.lang3.StringUtils;
+import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.spi.Container;
@@ -39,7 +40,7 @@ public class AppConfig extends ResourceConfig {
 	 * @throws Exception Configuration error.
 	 */
 	@Inject
-	public AppConfig(final WebConfig webConfig) 
+	public AppConfig(final WebConfig webConfig, final ServiceLocator serviceLocator) 
 			throws Exception {
 		// Setup logback logging engine.
 		LogbackUtils.install(webConfig.getServletContext().getRealPath("/WEB-INF/logback.xml"));		
@@ -87,17 +88,7 @@ public class AppConfig extends ResourceConfig {
 				try {
 		    		// Databases migration.
 					
-		    		final Map<String, String> commonProperties = new HashMap<>();
-		    		commonProperties.put(
-		    				PersistenceFeature.DB_BASE_PATH_PROPERTY, 
-		    				webConfig.getServletContext().getRealPath("/WEB-INF/db"));
-		    		
-		    		// Databases configuration.
-		    		final DbMaintenance dbMaintenance = new DbMaintenance(
-		    				new PropertiesConfiguration(webConfig.getServletContext().getRealPath("/WEB-INF/config.properties")),
-		    				new OrmlitePersistenceBinder(),
-		    				new MultipleDatabasesPersistenceConfiguratorBinder("dbPrefixes", "db01", commonProperties), 
-		    				null);
+					final DbMaintenance dbMaintenance = new DbMaintenance(serviceLocator, null);
 		    		
 		    		// Migrate first database.
 		    		dbMaintenance.Do(

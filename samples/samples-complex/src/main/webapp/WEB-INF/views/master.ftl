@@ -6,7 +6,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>${title?html}</title>
-		<link href="/assets/css/bootstrap.css" rel="stylesheet">
+		<#include "layout/styles.ftl">
 	</head>
 	<body>
 		<div class="container">
@@ -55,16 +55,8 @@
 			</footer>
 		</div>
 		
-		<script src="/assets/js/jquery.js"></script>
-		<script src="/assets/js/bootstrap.js"></script>
-		<#if scripts?is_sequence>
-    		<#list scripts as script>
-				<script src="/assets/js/${script}"></script>
-    		</#list>
-	  	<#else>
-			<script src="/assets/js/${scripts}"></script>
-		</#if>
-		<script src="/assets/js/site.js"></script>
+		<#include "layout/scrips.ftl">
+
 		<#if scriptText!?has_content>
 			<script>
 				$(function() {
