@@ -55,7 +55,7 @@
 			</footer>
 		</div>
 		
-		<#include "layout/scrips.ftl">
+		<#include "layout/scripts.ftl">
 
 		<#if scriptText!?has_content>
 			<script>
