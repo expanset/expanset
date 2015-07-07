@@ -200,12 +200,12 @@ public class ScheduleDrivenService implements InstanceLifecycleListener, PreDest
 			this.jobKey = new JobKey(ann.name(), ann.group());
 			this.jobClass = jobClass;
 			
-			String cronSchedule = ann.cronSchedule();
+			String cronSchedule = ann.expression();
 			if(StringUtils.isEmpty(cronSchedule)) {
 				if(configuration == null) {
 					throw new IllegalStateException("Need o use Configuration");
 				}
-				cronSchedule = configuration.getString(ann.cronScheduleProperty());
+				cronSchedule = configuration.getString(ann.expressionProperty());
 			}
 			
 			final JobDetail jobDetail = JobBuilder.newJob(jobClass) 

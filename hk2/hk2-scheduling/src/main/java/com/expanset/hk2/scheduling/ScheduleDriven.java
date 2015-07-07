@@ -30,10 +30,10 @@ public @interface ScheduleDriven {
 	/**
 	 * @return Embedded schedule as "cron" expression.
 	 */
-	String cronSchedule() default "";
+	String expression() default "";
 	
 	/**
 	 * @return Configuration property name for schedule as "cron" expression (you should register configuration access).
 	 */
-	String cronScheduleProperty() default "";
+	String expressionProperty() default "";
 }
