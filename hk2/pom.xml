@@ -25,6 +25,7 @@
 		<module>hk2-persistence-jpa</module>
 		<module>hk2-persistence-ormlite</module>
 		<module>hk2-jms</module>
+		<module>hk2-scheduling</module>
 	</modules>
 		
 	<dependencies>
