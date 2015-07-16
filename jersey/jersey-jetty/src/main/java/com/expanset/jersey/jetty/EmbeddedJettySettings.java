@@ -26,6 +26,8 @@ public class EmbeddedJettySettings {
 	private SessionIdManager sessionIdManager; 	
 	
 	private Class<? extends Application> applicationClass;
+	
+	private boolean useSecurity;
 
 	/**
 	 * @return Base path to static assets.
@@ -84,5 +86,16 @@ public class EmbeddedJettySettings {
 		Validate.notNull(applicationClass, "applicationClass");
 		
 		this.applicationClass = applicationClass;
+	}
+
+	/**
+	 * @return true - use Jetty security settings.
+	 */
+	public boolean getUseSecurity() {
+		return useSecurity;
+	}
+
+	public void setUseSecurity(boolean useSecurity) {
+		this.useSecurity = useSecurity;
 	}
 }

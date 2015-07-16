@@ -49,7 +49,8 @@ public class EmbeddedJetty implements PreDestroy {
 		this.server = (Server)serverSettings.getServerConfig().configure();
 
 		final ServletContextHandler contextHandler = 
-				new ServletContextHandler(null, "/", serverSettings.getSessionManager() != null, false);
+				new ServletContextHandler(null, "/", serverSettings.getSessionManager() != null, 
+				serverSettings.getUseSecurity());
 		contextHandler.setInitParameter(USING, "true");
 		String baseResourcePath = serverSettings.getBaseResourcePath();
 		if(StringUtils.isEmpty(baseResourcePath)) {
