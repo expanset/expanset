@@ -9,6 +9,7 @@ import javax.annotation.Priority;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Provider;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.ConstrainedTo;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.RuntimeType;
@@ -183,7 +184,7 @@ public class BasicAuthenticationFeature implements Feature {
 				throws IOException {
 			if(requestContext.getSecurityContext() == null 
 					|| requestContext.getSecurityContext().getUserPrincipal() == null) {
-				requestContext.abortWith(Response.status(401)
+				requestContext.abortWith(Response.status(HttpServletResponse.SC_UNAUTHORIZED)
 						.header("WWW-Authenticate", "Basic realm=\"" + realm +  "\"").build());
 			}
 		}

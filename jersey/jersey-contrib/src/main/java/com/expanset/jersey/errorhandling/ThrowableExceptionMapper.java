@@ -38,7 +38,16 @@ public class ThrowableExceptionMapper implements ExceptionMapper<Throwable> {
 	protected Response handleError(Throwable exception, Response response) {
 		if(exception instanceof WebApplicationException) {
 			if(exception instanceof ClientErrorException) {
-				log.error("Web request failed, class: {}, message: {}", exception.getClass().getName(), exception.getMessage());
+				final ClientErrorException clientException = (ClientErrorException)exception;
+				if(clientException.getResponse() != null 
+						&& clientException.getResponse().getStatus() < 400) {
+					log.info("Web request failed, class: {}, message: {}", exception.getClass().getName(), exception.getMessage());
+				} else if(clientException.getResponse() != null 
+						&& clientException.getResponse().getStatus() < 500) {
+					log.warn("Web request failed, class: {}, message: {}", exception.getClass().getName(), exception.getMessage());
+				} else {
+					log.error("Web request failed, class: {}, message: {}", exception.getClass().getName(), exception.getMessage());
+				}
 			} else {
 				log.error("Web request failed", exception);
 			}

@@ -1,8 +1,5 @@
 package com.expanset.samples.manydatabases;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
 
@@ -22,10 +19,7 @@ import org.slf4j.LoggerFactory;
 import com.expanset.dbmigration.DbMaintenance;
 import com.expanset.hk2.persistence.PersistenceContextFactoryKey;
 import com.expanset.hk2.persistence.PersistenceContextKey;
-import com.expanset.hk2.persistence.config.MultipleDatabasesPersistenceConfiguratorBinder;
-import com.expanset.hk2.persistence.ormlite.OrmlitePersistenceBinder;
 import com.expanset.jersey.mvc.freemarker.FreemarkerMvcFeature;
-import com.expanset.jersey.persistence.PersistenceFeature;
 import com.expanset.jersey.persistence.ormlite.OrmlitePersistenceFeature;
 import com.expanset.logback.LogbackUtils;
 
@@ -37,6 +31,7 @@ public class AppConfig extends ResourceConfig {
 
 	/**
 	 * @param webConfig The Web configuration for accessing initialization parameters.
+	 * @param serviceLocator Services. 
 	 * @throws Exception Configuration error.
 	 */
 	@Inject
