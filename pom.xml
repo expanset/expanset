@@ -162,6 +162,7 @@
 	</dependencies>
 	
 	<build>
+	 	<finalName>expanset-${project.artifactId}-${project.version}</finalName>
 		<pluginManagement>
         	<plugins> 
 				<plugin>
