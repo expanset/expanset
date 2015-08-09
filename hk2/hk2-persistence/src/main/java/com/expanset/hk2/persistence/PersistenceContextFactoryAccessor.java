@@ -9,7 +9,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 import javax.inject.Inject;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.glassfish.hk2.api.PreDestroy;
@@ -32,12 +31,12 @@ public class PersistenceContextFactoryAccessor implements PreDestroy {
 	@Inject
 	protected PersistenceContextFactoryCreator factoryCreator;
 	
-	protected Map<String, String> commonProperties = new HashMap<>();
-	
 	protected final Map<String, Map<String, String>> factoryProperties = new HashMap<>();
-	
-	protected final Map<PersistenceContextFactoryKey, PersistenceContextFactoryWrapper> factories = new HashMap<>();
+			
+	protected Map<String, String> commonProperties = new HashMap<>();	
 
+	protected final Map<PersistenceContextFactoryKey, PersistenceContextFactoryWrapper> factories = new HashMap<>();
+	
 	private final static Logger log = LoggerFactory.getLogger(PersistenceContextFactoryAccessor.class);
 		
 	/**
@@ -54,7 +53,7 @@ public class PersistenceContextFactoryAccessor implements PreDestroy {
 			if(properties == null) {
 				throw new IllegalStateException(String.format(
 						"Factory properties with name %s not found. Properties must be registered before using", 
-						StringUtils.isEmpty(key.getFactoryName()) ? "(empty)" : key.getFactoryName()));
+						StringUtils.isEmpty(key.getFactoryName()) ? "(default)" : key.getFactoryName()));
 			}
 			
 			factory = factoryCreator.create(
@@ -146,17 +145,17 @@ public class PersistenceContextFactoryAccessor implements PreDestroy {
 			for(Entry<String, Map<String, String>> entry : newProperties.entrySet()) {
 				factoryProperties.put(entry.getKey(), new HashMap<>(entry.getValue()));
 			}
-			
-			for(PersistenceContextFactoryWrapper factory : factories.values()) {
-				ExceptionAdapter.closeQuitely(factory, log);
-			}		
-			factories.clear();	
 		}
 		
 		if(commonProperties != null) {
 			this.commonProperties.clear();
 			this.commonProperties.putAll(commonProperties);
 		}
+
+		for(PersistenceContextFactoryWrapper factory : factories.values()) {
+			ExceptionAdapter.closeQuitely(factory, log);
+		}		
+		factories.clear();	
 	}
 	
 	/**
@@ -177,7 +176,7 @@ public class PersistenceContextFactoryAccessor implements PreDestroy {
 			ExceptionAdapter.closeQuitely(factory, log);
 		}		
 		factories.clear();
-	}
+	}	
 	
 	@Override
 	@javax.annotation.PreDestroy
@@ -194,5 +193,5 @@ public class PersistenceContextFactoryAccessor implements PreDestroy {
 				it.remove();
 			}
 		}
-	}	
+	}
 }

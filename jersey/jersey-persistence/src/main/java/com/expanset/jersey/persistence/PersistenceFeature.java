@@ -10,9 +10,10 @@ import javax.ws.rs.core.FeatureContext;
 import org.apache.commons.lang3.StringUtils;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
-import com.expanset.hk2.persistence.config.PersistenceConfiguratorBinder;
-import com.expanset.hk2.persistence.config.MultipleDatabasesPersistenceConfiguratorBinder;
-import com.expanset.hk2.persistence.config.SingleDatabasePersistenceConfiguratorBinder;
+import com.expanset.hk2.persistence.config.MultipleDatabasesPersistenceConfiguratorSettings;
+import com.expanset.hk2.persistence.config.PersistenceConfigurator;
+import com.expanset.hk2.persistence.config.PersistenceConfiguratorSettings;
+import com.expanset.hk2.persistence.config.SingleDatabasePersistenceConfiguratorSettings;
 import com.expanset.hk2.persistence.transactions.LocalTransactionsBinder;
 
 /**
@@ -76,7 +77,7 @@ public abstract class PersistenceFeature implements Feature {
 	 * {@link javax.inject.Named} annotation does not exist.
 	 */
 	public final static String CONFIG_DEFAULT_PREFIX = PersistenceFeature.class.getName() + ".configDefaultPrefix";
-	
+		
 	/**
 	 * {@link String} property defining the path to databases. It can be substituted of database urls like 
 	 * <code>db1.javax.persistence.jdbc.url=jdbc:h2:${basePath}/db1</code>
@@ -91,34 +92,40 @@ public abstract class PersistenceFeature implements Feature {
 	@Override
 	public boolean configure(FeatureContext context) {
 		final Configuration config = context.getConfiguration();
-		
-		final Boolean useLocalTransactions = (Boolean)config.getProperty(USE_LOCAL_TRANSACTIONS);
-		if(useLocalTransactions == null || useLocalTransactions.booleanValue()) {
-			context.register(new LocalTransactionsBinder());
-		}
-		
-		final Map<String, String> commonProperties = new HashMap<>();
-		fillCommonProperties(config, commonProperties);
-			
-		final String configPrefix = (String)config.getProperty(CONFIG_PREFIX);
-		if(StringUtils.isNotEmpty(configPrefix)) {
-			context.register(new SingleDatabasePersistenceConfiguratorBinder(configPrefix, commonProperties));
-		} else {
-			final String configPrefixesProperty = (String)config.getProperty(CONFIG_PREFIXES_PROPERTY);
-			final String configDefaultPrefixProperty = (String)config.getProperty(CONFIG_DEFAULT_PREFIX);
-			if(StringUtils.isNotEmpty(configPrefixesProperty)) {
-				context.register(new MultipleDatabasesPersistenceConfiguratorBinder(
-						configPrefixesProperty, configDefaultPrefixProperty, commonProperties));
-			} else {
-				context.register(new PersistenceConfiguratorBinder(commonProperties));
-			}
-		}
 
 		context.register(RequestPersistenceSessionManager.class);
 		
 		context.register(new AbstractBinder() {
 			@Override
 			protected void configure() {
+				final Boolean useLocalTransactions = (Boolean)config.getProperty(USE_LOCAL_TRANSACTIONS);
+				if(useLocalTransactions == null || useLocalTransactions.booleanValue()) {
+					context.register(new LocalTransactionsBinder());
+				}
+				
+				PersistenceConfiguratorSettings settings;
+				
+				final String configPrefix = (String)config.getProperty(CONFIG_PREFIX);
+				if(StringUtils.isNotEmpty(configPrefix)) {
+					settings = new SingleDatabasePersistenceConfiguratorSettings(configPrefix);
+				} else {
+					final String configPrefixesProperty = (String)config.getProperty(CONFIG_PREFIXES_PROPERTY);
+					final String configDefaultPrefixProperty = (String)config.getProperty(CONFIG_DEFAULT_PREFIX);
+					if(StringUtils.isNotEmpty(configPrefixesProperty)) {
+						settings = new MultipleDatabasesPersistenceConfiguratorSettings(
+								configPrefixesProperty, configDefaultPrefixProperty);
+					} else {
+						settings = new PersistenceConfiguratorSettings();
+					}
+				}
+				
+				final Map<String, String> commonProperties = new HashMap<>();
+				fillCommonProperties(config, commonProperties);
+				settings.setCommonProperties(commonProperties);
+								
+				bind(settings).to(PersistenceConfiguratorSettings.class);
+				
+				addActiveDescriptor(PersistenceConfigurator.class);
 				addActiveDescriptor(RequestPersistenceSessionManager.class);
 			}
 		});

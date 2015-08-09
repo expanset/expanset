@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
@@ -30,10 +29,7 @@ public class MultipleDatabasesPersistenceConfiguratorSettings extends Persistenc
 	 */
 	public MultipleDatabasesPersistenceConfiguratorSettings(
 			@Nonnull String configPrefixesProperty,
-			@Nullable String configDefaultPrefixProperty,
-			@Nullable Map<String, String> commonProperties) {
-		super(commonProperties);
-		
+			@Nullable String configDefaultPrefixProperty) {	
 		Validate.notEmpty(configPrefixesProperty, "configPrefixesProperty");
 				
 		this.configPrefixesProperty = configPrefixesProperty;
@@ -41,7 +37,7 @@ public class MultipleDatabasesPersistenceConfiguratorSettings extends Persistenc
 	}
 	
 	@Override
-	public Map<String, Map<String, String>> geConfiguration(Configuration config) {
+	public Map<String, Map<String, String>> getConfiguration(@Nonnull Configuration config) {
 		Validate.notNull(config, "config");
 		
 		final Map<String, Map<String, String>> result = new HashMap<>();

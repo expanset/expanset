@@ -12,7 +12,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 import javax.inject.Inject;
-
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,12 +53,7 @@ public class PersistenceSession implements AutoCloseable {
 		Validate.notNull(key, "key");
 		Validate.notNull(persistenceContextClass, "persistenceContextClass");
 		
-		if(factoryNameOverrides != null) {
-			final String newFactoryName = factoryNameOverrides.get(key.getFactoryKey().getFactoryName());
-			if(newFactoryName != null) {
-				key = key.clone(newFactoryName);
-			}
-		}
+		key = resolveFactoryKey(key);
 		
 		PersistenceContextHolder result = persistenceContexts.get(key);
 		if(result == null) {
@@ -77,7 +71,7 @@ public class PersistenceSession implements AutoCloseable {
 		
 		return persistenceCotext;
 	}
-
+	
 	/**
 	 * @return List of the persistence contexts, that was created in calling thread. 
 	 */
@@ -117,6 +111,26 @@ public class PersistenceSession implements AutoCloseable {
 		}
 	}
 	
+	public PersistenceContextKey resolveFactoryKey(PersistenceContextKey key) {
+		if(factoryNameOverrides != null) {
+			final String newFactoryName = factoryNameOverrides.get(key.getFactoryKey().getFactoryName());
+			if(newFactoryName != null) {
+				key = key.clone(newFactoryName);
+			}
+		}
+		return key;
+	}	
+	
+	public String resolveFactoryName(String factoryName) {
+		if(factoryNameOverrides != null) {
+			final String newFactoryName = factoryNameOverrides.get(factoryName);
+			if(newFactoryName != null) {
+				return newFactoryName;
+			}
+		}
+		return factoryName;
+	} 		
+	
 	/**
 	 * Close persistence session.
 	 */
@@ -124,7 +138,7 @@ public class PersistenceSession implements AutoCloseable {
 	public synchronized void close()
 			throws Exception {
 		evict();
-	}
+	}	
 	
 	protected final class PersistenceContextHolder {
 		

@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.expanset.dbmigration.DbMaintenance;
-import com.expanset.hk2.persistence.config.SingleDatabasePersistenceConfiguratorBinder;
+import com.expanset.hk2.persistence.config.SingleDatabasePersistenceConfiguratorSettings;
 import com.expanset.hk2.persistence.jpa.JpaPersistenceBinder;
 import com.expanset.hk2.persistence.jpa.JpaPersistenceContextKey;
 import com.expanset.jersey.jetty.EmbeddedJetty;
@@ -110,13 +110,17 @@ public class Startup {
 		final Map<String, String> commonProperties = new HashMap<>();
 		commonProperties.put(PersistenceFeature.DB_BASE_PATH_PROPERTY, getResourcePath("/WEB-INF/db"));
 		
+		final SingleDatabasePersistenceConfiguratorSettings settings = 
+				new SingleDatabasePersistenceConfiguratorSettings("db");
+		settings.setCommonProperties(commonProperties);
+		
 		final DbMaintenance dbMaintenance = new DbMaintenance(
 				// Database connection properties.
 				new PropertiesConfiguration(getResourcePath("/WEB-INF/config.properties")),
 				// We uses JPA.
 				new JpaPersistenceBinder(),
 				// We have single database with settings started as 'db.'.
-				new SingleDatabasePersistenceConfiguratorBinder("db", commonProperties), 
+				settings, 
 				// Liquibase changeset file.
 				"db/main.xml");
     	if(DbMaintenance.isDbCommandLine(args)) {

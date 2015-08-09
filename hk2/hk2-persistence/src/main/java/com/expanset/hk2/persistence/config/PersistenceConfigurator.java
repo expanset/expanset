@@ -10,6 +10,7 @@ import org.glassfish.hk2.api.InstanceLifecycleEvent;
 import org.glassfish.hk2.api.InstanceLifecycleEventType;
 import org.glassfish.hk2.api.InstanceLifecycleListener;
 import org.glassfish.hk2.utilities.BuilderHelper;
+import org.jvnet.hk2.annotations.Contract;
 import org.jvnet.hk2.annotations.Service;
 
 import com.expanset.hk2.config.ConfigurationReloadListener;
@@ -19,17 +20,18 @@ import com.expanset.hk2.persistence.PersistenceContextFactoryAccessor;
  * Configure persistence environment based on properties in the configuration file.
  */
 @Service
+@Contract
 public class PersistenceConfigurator implements 
 	InstanceLifecycleListener, ConfigurationReloadListener {
+
+	@Inject
+	protected Configuration config;		
 
 	@Inject
 	protected PersistenceConfiguratorSettings settings;
 	
 	@Inject
 	protected Provider<PersistenceContextFactoryAccessor> factoryAccessorProvider;
-
-	@Inject
-	protected Configuration config;
 	
 	@Override
 	public Filter getFilter() {
@@ -52,7 +54,7 @@ public class PersistenceConfigurator implements
 		assert factoryAccessor != null;
 				
 		factoryAccessor.resetFactoriesProperties(
-				settings.geConfiguration(config), 
-				settings.getCommonProperties());	
+				settings.getConfiguration(config),
+				settings.getCommonProperties(config));	
 	}
 }

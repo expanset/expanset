@@ -13,8 +13,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.expanset.hk2.persistence.config.MultipleDatabasesPersistenceConfiguratorBinder;
-import com.expanset.hk2.persistence.config.SingleDatabasePersistenceConfiguratorBinder;
+import com.expanset.hk2.persistence.config.MultipleDatabasesPersistenceConfiguratorSettings;
+import com.expanset.hk2.persistence.config.PersistenceConfigurator;
+import com.expanset.hk2.persistence.config.PersistenceConfiguratorSettings;
+import com.expanset.hk2.persistence.config.SingleDatabasePersistenceConfiguratorSettings;
 import com.expanset.hk2.persistence.transactions.LocalTransactionsBinder;
 
 import static org.junit.Assert.*;
@@ -66,9 +68,13 @@ public class PersistenceConfiguratorTest {
 					@Override
 					protected void configure() {
 						bind(config).to(Configuration.class);
+						MultipleDatabasesPersistenceConfiguratorSettings settings = 
+								new MultipleDatabasesPersistenceConfiguratorSettings("dbs", "db2");
+						settings.setCommonProperties(commonProperties);
+						bind(settings).to(PersistenceConfiguratorSettings.class);
+						addActiveDescriptor(PersistenceConfigurator.class);
 					}
-				},
-				new MultipleDatabasesPersistenceConfiguratorBinder("dbs", "db2", commonProperties));
+				});
 		
 		final PersistenceContextFactoryAccessor accessor = 
 				serviceLocator.getService(PersistenceContextFactoryAccessor.class);
@@ -104,10 +110,14 @@ public class PersistenceConfiguratorTest {
 				new AbstractBinder() {
 					@Override
 					protected void configure() {
-						bind(config).to(Configuration.class);
+						bind(config).to(Configuration.class);						
+						SingleDatabasePersistenceConfiguratorSettings settings = 
+								new SingleDatabasePersistenceConfiguratorSettings("db1");
+						settings.setCommonProperties(commonProperties);	
+						bind(settings).to(PersistenceConfiguratorSettings.class);
+						addActiveDescriptor(PersistenceConfigurator.class);
 					}
-				},
-				new SingleDatabasePersistenceConfiguratorBinder("db1", commonProperties));
+				});
 		
 		final PersistenceContextFactoryAccessor accessor = 
 				serviceLocator.getService(PersistenceContextFactoryAccessor.class);

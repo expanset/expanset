@@ -24,6 +24,15 @@
 		<module>utils-jackson</module>
 		<module>utils-logback</module>
 		<module>utils-dbmigration</module>
+		<module>utils-jndi</module>
 	</modules>
 		
+	<dependencies>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+			
 </project>

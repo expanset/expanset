@@ -24,7 +24,8 @@ import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import com.expanset.hk2.persistence.PersistenceBinder;
 import com.expanset.hk2.persistence.PersistenceContextKey;
 import com.expanset.hk2.persistence.ThreadScopePersistenceSessionManager;
-import com.expanset.hk2.persistence.config.PersistenceConfiguratorBinder;
+import com.expanset.hk2.persistence.config.PersistenceConfigurator;
+import com.expanset.hk2.persistence.config.PersistenceConfiguratorSettings;
 import com.expanset.hk2.persistence.transactions.LocalTransactionsBinder;
 
 /**
@@ -46,17 +47,17 @@ public class DbMaintenance {
 	/**
 	 * @param config Configuration with database connection settings.
 	 * @param persistenceBinder Configurator for database connection access. 
-	 * @param persistenceConfiguratorBinder Configurator for setup database connection access.
+	 * @param persistenceConfiguratorSettings Configurator for setup database connection access.
 	 * @param changeLogFile Name of changelog file (in classpath), optional.
 	 */
 	public DbMaintenance(
 			@Nonnull Configuration config, 
 			@Nonnull PersistenceBinder persistenceBinder, 
-			@Nonnull PersistenceConfiguratorBinder persistenceConfiguratorBinder,
+			@Nonnull PersistenceConfiguratorSettings persistenceConfiguratorSettings,
 			@Nullable String changeLogFile) {
 		Validate.notNull(config, "config");
 		Validate.notNull(persistenceBinder, "persistenceBinder");
-		Validate.notNull(persistenceConfiguratorBinder, "persistenceConfiguratorBinder");
+		Validate.notNull(persistenceConfiguratorSettings, "persistenceConfiguratorSettings");
 		
 		this.changeLogFile = changeLogFile;
 		
@@ -65,13 +66,14 @@ public class DbMaintenance {
 			@Override
 			protected void configure() {
 				install(persistenceBinder);
-				install(persistenceConfiguratorBinder);
 				install(new LocalTransactionsBinder());
 				install(new DbMaintenanceBinder());
 				
 				bind(config).to(Configuration.class);
 				bind(DbMaintenance.this).to(DbMaintenance.class);
+				bind(persistenceConfiguratorSettings).to(PersistenceConfiguratorSettings.class);
 				
+				addActiveDescriptor(PersistenceConfigurator.class);
 				addActiveDescriptor(ThreadScopePersistenceSessionManager.class);
 			}
 		});
