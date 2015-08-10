@@ -25,7 +25,6 @@ public class MultipleDatabasesPersistenceConfiguratorSettings extends Persistenc
 	/**
 	 * @param configPrefixesProperty Configuration file property that contains a list of database settings prefixes.
 	 * @param configDefaultPrefixProperty Configuration file property that contains a name of default database prefix.
-	 * @param commonProperties Additional properties for persistence engine.
 	 */
 	public MultipleDatabasesPersistenceConfiguratorSettings(
 			@Nonnull String configPrefixesProperty,

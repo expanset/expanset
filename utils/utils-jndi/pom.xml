@@ -11,7 +11,7 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	
-	<artifactId>utils-inmemory-jndi</artifactId>
+	<artifactId>utils-jndi</artifactId>
 		
 	<packaging>jar</packaging>
 

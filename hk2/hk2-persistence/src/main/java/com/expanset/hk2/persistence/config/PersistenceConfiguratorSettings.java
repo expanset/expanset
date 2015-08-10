@@ -19,11 +19,16 @@ public class PersistenceConfiguratorSettings {
 	
 	protected Map<String, String> commonProperties;
 
+	/**
+	 * @param config External configuration.
+	 * @return Persistence factories properties.
+	 */
 	public Map<String, Map<String, String>> getConfiguration(@Nonnull Configuration config) {
 		return null;
 	}
 	
 	/**
+	 * @param config External configuration.
 	 * @return Additional properties for the persistence engine.
 	 */
 	public Map<String, String> getCommonProperties(@Nullable Configuration config) {

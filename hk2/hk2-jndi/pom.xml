@@ -21,7 +21,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.expanset.utils</groupId>
-			<artifactId>utils-inmemory-jndi</artifactId>
+			<artifactId>utils-jndi</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
