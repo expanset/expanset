@@ -14,7 +14,7 @@ Expanset is a suite for a fast creation of Java web applications:
 * Ability to create standalone web applications without any external servlet container.
 * Number of Java annotations for using usual web applications features.
 
-# Project site [expanset.com](https://expanset.com/).
+Project site [expanset.com](https://expanset.com/).
 
 Found an issue or need help?
 ---
